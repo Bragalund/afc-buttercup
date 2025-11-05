@@ -4,7 +4,7 @@ ARG BASE_IMAGE=ghcr.io/aixcc-finals/base-runner:v1.3.0
 
 FROM $BASE_IMAGE AS runner-base
 RUN apt-get update
-RUN curl -fsSL https://get.docker.com | sh
+RUN curl -fsSL https://get.docker.com | sed 's/docker-model-plugin //g' | sh
 
 FROM $BASE_IMAGE AS builder
 
