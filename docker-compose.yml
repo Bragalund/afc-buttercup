@@ -1,0 +1,4 @@
+# Compatibility wrapper for tools that expect `docker-compose.yml`.
+# The actual service definitions live in ./compose.yaml.
+include:
+  - ./compose.yaml
