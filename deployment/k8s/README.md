@@ -172,6 +172,14 @@ To update your deployment after making changes:
 helm upgrade buttercup ./ -f values-override.yaml
 ```
 
+## OpenShift + Argo CD + Kustomize
+
+If you want to run Buttercup on OpenShift using GitOps, use the OpenShift overlay in:
+
+- `deployment/k8s/openshift/README.md`
+
+That workflow uses Kustomize with `--enable-helm` to render this Helm chart and an Argo CD `Application` to continuously sync the deployment.
+
 ## Troubleshooting
 
 ### Checking Pod Status

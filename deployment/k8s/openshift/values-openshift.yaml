@@ -1,0 +1,40 @@
+# Example override values for OpenShift.
+# Copy this file and replace placeholders before deploying.
+
+global:
+  environment: "aks"
+  volumes:
+    nodeLocal:
+      enabled: false
+
+  langfuse:
+    enabled: false
+
+  crs:
+    hostname: "buttercup-crs.apps.<cluster-domain>"
+
+litellm:
+  masterKey: "replace-with-32-byte-hex"
+  azure:
+    apiBase: "https://<azure-openai-endpoint>.openai.azure.com/"
+    apiKey: "replace-me"
+  openai:
+    apiKey: "replace-me"
+  anthropic:
+    apiKey: "replace-me"
+
+volumes:
+  tasks_storage:
+    storageClass: "ocs-storagecluster-cephfs"
+  crs_scratch:
+    storageClass: "ocs-storagecluster-cephfs"
+
+redis:
+  master:
+    persistence:
+      storageClass: "ocs-storagecluster-ceph-rbd"
+
+# If your OpenShift cluster does not permit privileged workloads,
+# coordinate with your cluster admins before enabling dind-daemon.
+dind-daemon:
+  enabled: true
