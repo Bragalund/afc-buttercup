@@ -82,6 +82,31 @@ Log into ghcr.io:
 docker login ghcr.io -u <username>
 ```
 
+## Docker Compose
+
+A Compose setup is provided at the repository root.
+
+* `compose.yaml` contains the full stack definition.
+* `docker-compose.yml` is a compatibility wrapper so tools that expect the legacy filename still work.
+
+Start the default stack:
+
+```shell
+docker compose up -d
+```
+
+Start optional services (example: graph database profile):
+
+```shell
+docker compose --profile graphdb up -d
+```
+
+Stop and remove containers:
+
+```shell
+docker compose down --remove-orphans
+```
+
 ## Running the CRS
 
 ### Starting the services
