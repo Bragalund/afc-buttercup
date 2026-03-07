@@ -1,0 +1,13 @@
+[package]
+name = "buttercup-dev-cli"
+version = "0.1.0"
+edition = "2021"
+description = "Local developer CLI for the Buttercup CRS repository"
+license = "MIT"
+
+[[bin]]
+name = "buttercup-dev"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
