@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        component:
+          - common
+          - program-model
+          - fuzzer
+          - orchestrator
+          - patcher
+          - seed-gen
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.component }}
+        run: uv sync --all-extras --all-groups
+
+      - name: Build package
+        working-directory: ${{ matrix.component }}
+        run: uv build
+
+      - name: Run tests
+        working-directory: ${{ matrix.component }}
+        run: uv run pytest
