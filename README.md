@@ -1,5 +1,34 @@
 # Trail of Bits AIxCC Finals CRS
 
+## Repository use case
+
+This repository contains Trail of Bits' AIxCC Finals Cyber Reasoning System (CRS): a multi-service platform that accepts challenge tasks, runs fuzzing and analysis workflows, and submits proof-of-vulnerability (PoV), patch, and SARIF-style findings back to the competition API.
+
+In practice, you can use this repo as a reference implementation for running an AI-assisted vulnerability research pipeline end-to-end:
+
+* Ingest challenge metadata and source bundles.
+* Build and fuzz targets continuously.
+* Triage crashes and produce reproducers.
+* Generate and validate candidate patches.
+* Submit artifacts and track round status.
+
+## Using this repository for your own code
+
+If you want to apply this system to a different codebase, follow this simple workflow:
+
+1. **Deploy the stack locally** using the configuration and deployment instructions below.
+2. **Prepare your target project** so it can be built and fuzzed in a containerized environment (build scripts, dependencies, and harnesses).
+3. **Replace sample task inputs** (for example, `example-libpng`) with task data that points to your project bundle and fuzz targets.
+4. **Run the orchestrator flow** to send tasks and SARIF updates, then monitor scheduler logs for PoV/patch submission behavior.
+5. **Iterate on configuration** (model provider keys, runtime limits, profiles) to match your project's language, build system, and scale.
+
+For component-level details while adapting the pipeline, see:
+
+* `common/README.md` for shared task/data utilities.
+* `fuzzer/README.md` for fuzzing infrastructure behavior.
+* `program-model/README.md` for program analysis/modeling support.
+* `deployment/README.md` for deployment-specific operations.
+
 ## Dependencies
 
 Follow the install instructions for the required dependencies:
