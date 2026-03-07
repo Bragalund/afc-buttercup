@@ -107,6 +107,33 @@ Stop and remove containers:
 docker compose down --remove-orphans
 ```
 
+## Rust developer CLI
+
+A small Rust CLI is available for common local workflows:
+
+```shell
+cargo run --manifest-path dev-cli/Cargo.toml -- --help
+```
+
+Examples:
+
+```shell
+# Start compose stack
+cargo run --manifest-path dev-cli/Cargo.toml -- up
+
+# Start compose stack with graphdb profile
+cargo run --manifest-path dev-cli/Cargo.toml -- up --profile graphdb
+
+# Bring deployment stack up/down
+cargo run --manifest-path dev-cli/Cargo.toml -- deploy-up
+cargo run --manifest-path dev-cli/Cargo.toml -- deploy-down
+
+# Run helper scripts
+cargo run --manifest-path dev-cli/Cargo.toml -- task
+cargo run --manifest-path dev-cli/Cargo.toml -- send-sarif <TASK-ID>
+cargo run --manifest-path dev-cli/Cargo.toml -- challenge
+```
+
 ## Running the CRS
 
 ### Starting the services
