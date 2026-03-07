@@ -172,6 +172,16 @@ To update your deployment after making changes:
 helm upgrade buttercup ./ -f values-override.yaml
 ```
 
+## Argo CD infrastructure manifest
+
+Use the single Argo CD `Application` manifest below to deploy the full Buttercup infrastructure stack (namespace + chart-managed components) via the OpenShift/Kustomize overlay:
+
+```bash
+kubectl apply -f deployment/k8s/argocd-infrastructure-application.yaml
+```
+
+Before applying, update `repoURL`, `targetRevision`, and (if needed) the Argo CD namespace in the manifest.
+
 ## OpenShift + Argo CD + Kustomize
 
 If you want to run Buttercup on OpenShift using GitOps, use the OpenShift overlay in:
