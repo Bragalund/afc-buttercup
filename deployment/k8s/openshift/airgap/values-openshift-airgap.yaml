@@ -1,0 +1,101 @@
+# Air-gapped OpenShift values for Buttercup.
+#
+# Important:
+# 1) Mirror all required container images to your internal registry.
+# 2) Replace all "REPLACE_ME" placeholders.
+# 3) Keep pull policies at IfNotPresent/Never to avoid external pulls.
+
+global:
+  environment: "openshift-airgap"
+  ossFuzzContainerOrg: "registry.apps.cluster.local/aixcc-afc"
+  volumes:
+    nodeLocal:
+      enabled: false
+
+  orchestratorImage:
+    repository: registry.apps.cluster.local/buttercup/buttercup-orchestrator
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  fuzzerImage:
+    repository: registry.apps.cluster.local/buttercup/buttercup-fuzzer
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  seedGenImage:
+    repository: registry.apps.cluster.local/buttercup/buttercup-seed-gen
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  patcherImage:
+    repository: registry.apps.cluster.local/buttercup/buttercup-patcher
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  programModelImage:
+    repository: registry.apps.cluster.local/buttercup/buttercup-program-model
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  competitionApiImage:
+    repository: registry.apps.cluster.local/buttercup/competition-test-api
+    tag: "REPLACE_ME"
+    pullPolicy: IfNotPresent
+    pullSecrets: ["airgap-registry-auth"]
+
+  langfuse:
+    enabled: false
+
+  crs:
+    api_key_id: "REPLACE_ME"
+    api_key_token: "REPLACE_ME"
+    api_key_token_hash: "REPLACE_ME"
+    hostname: "buttercup-crs.apps.<cluster-domain>"
+    competition_api_key_id: "REPLACE_ME"
+    competition_api_key_token: "REPLACE_ME"
+
+litellm:
+  masterKey: "REPLACE_ME"
+  azure:
+    apiBase: "REPLACE_ME"
+    apiKey: "REPLACE_ME"
+  openai:
+    apiKey: "REPLACE_ME"
+  anthropic:
+    apiKey: "REPLACE_ME"
+
+volumes:
+  tasks_storage:
+    storageClass: "ocs-storagecluster-cephfs"
+  crs_scratch:
+    storageClass: "ocs-storagecluster-cephfs"
+
+redis:
+  master:
+    persistence:
+      storageClass: "ocs-storagecluster-ceph-rbd"
+  global:
+    imagePullSecrets:
+      - airgap-registry-auth
+
+# If your OpenShift cluster does not permit privileged workloads,
+# coordinate with your cluster admins before enabling dind-daemon.
+dind-daemon:
+  enabled: true
+
+litellm-helm:
+  imagePullSecrets:
+    - name: airgap-registry-auth
+  postgresql:
+    image:
+      registry: registry.apps.cluster.local
+      repository: bitnami/postgresql
+      tag: "17.2.0"
+
+registry-cache:
+  enabled: false
